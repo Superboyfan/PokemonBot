@@ -53,7 +53,7 @@ defaults set in the sample_config, hence making it easier to upgrade.
 
 An example `config.py` file could be:
 ```
-from SaitamaRobot.sample_config import Config
+from Trainerred.sample_config import Config
 
 class Development(Config):
     OWNER_ID = 254318997  # your telegram ID

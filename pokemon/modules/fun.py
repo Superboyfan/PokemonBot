@@ -14,7 +14,8 @@ from pokemon.modules.helper_funcs.extraction import extract_user
 
 normiefont = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 weebyfont = ['卂','乃','匚','刀','乇','下','厶','卄','工','丁','长','乚','从','𠘨','口','尸','㔿','尺','丂','丅','凵','リ','山','乂','丫','乙']
-
+blocknormiefont= ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+blockfont=['🇦‌','🇧‌','🇨‌','🇩‌','🇪‌','🇫‌','🇬‌','🇭‌','🇮‌','🇯‌','🇰‌','🇱‌','🇲‌','🇳‌','🇴‌','🇵‌','🇶‌','🇷‌','🇸‌','🇹‌','🇺‌','🇻‌','🇼‌','🇽‌','🇾‌','🇿‌']
 @run_async
 def runs(bot: Bot, update: Update):
     update.effective_message.reply_text(random.choice(fun_strings.RUN_STRINGS))
@@ -168,6 +169,27 @@ def shout(bot: Bot, update: Update, args: List[str]):
     return update.effective_message.reply_text(msg, parse_mode="MARKDOWN")
       
 
+@run_async
+def block(bot: Bot, update: Update, args):
+    msg = update.effective_message
+    if args:
+        string = " ".join(args).lower()
+    elif msg.reply_to_message:
+        string = msg.reply_to_message.text.lower()
+    else:
+        msg.reply_text("Enter some text to blockfont or reply to someone's message!")
+        return
+        
+    for blocknormiecharacter in string:
+        if blocknormiecharacter in blocknormiefont:
+            blockcharacter = blockfont[blocknormiefont.index(blocknormiecharacter)]
+            string = string.replace(blocknormiecharacter, blockcharacter)
+
+    if msg.reply_to_message:
+        msg.reply_to_message.reply_text(string)
+    else:
+        msg.reply_text(string)
+
 __help__ = """
  - /runs: reply a random string from an array of replies.
  - /slap: slap a user, or get slapped if not a reply.
@@ -180,6 +202,7 @@ __help__ = """
  - /rlg : Join ears,nose,mouth and create an emo ;-;
  - /judge: as a reply to someone, checks if they're lying or not!
  - /weebify: as a reply to a message, "weebifies" the message.
+-/block: as a reply to a message, "blockfont" the messange.
  - /shout <word>: shout the specified word in the chat.
 """
 
@@ -195,6 +218,7 @@ TABLE_HANDLER = DisableAbleCommandHandler("table", table)
 JUDGE_HANDLER = DisableAbleCommandHandler("judge", judge)
 WEEBIFY_HANDLER = DisableAbleCommandHandler("weebify", weebify, pass_args=True)
 SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout, pass_args=True)
+BLOCK_HANDLER = DisableAbleCommandHandler("block", block, pass_args=True)
 
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
@@ -208,8 +232,9 @@ dispatcher.add_handler(TABLE_HANDLER)
 dispatcher.add_handler(JUDGE_HANDLER)
 dispatcher.add_handler(WEEBIFY_HANDLER)
 dispatcher.add_handler(SHOUT_HANDLER)
+dispatcher.add_handler(BLOCK_HANDLER)
 
 __mod_name__ = "FUN"
-__command_list__ = ["runs", "slap", "roll", "toss", "shrug", "bluetext", "rlg", "decide", "table", "judge", "weebify", "shout"]
+__command_list__ = ["runs", "slap", "roll", "toss", "shrug", "bluetext", "rlg", "decide", "table", "judge", "weebify", "shout","pat"]
 __handlers__ = [RUNS_HANDLER, SLAP_HANDLER, ROLL_HANDLER, TOSS_HANDLER, SHRUG_HANDLER, BLUETEXT_HANDLER, RLG_HANDLER,
                 DECIDE_HANDLER, TABLE_HANDLER, JUDGE_HANDLER, WEEBIFY_HANDLER, SHOUT_HANDLER]
