@@ -29,7 +29,7 @@ from pokemon.modules.connection import connect_button
 
 PM_START_TEXT = """
 Hi {}, my name is {}! 
-I am an Anime themed group management bot with some fun extras ;)
+I am an AnimE themed group management bot with some fun extras ;)
 You can find the list of available commands with /help
 """
 
